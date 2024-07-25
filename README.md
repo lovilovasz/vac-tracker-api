@@ -1,2 +1,2 @@
 # vac-tracker-api
- Track your petEntities vaccinations. Receive notification about expiring vaccinationEntity and much more.
+ Track your petEntities vaccinations. Receive notification about expiring vaccinationRecordEntity and much more.

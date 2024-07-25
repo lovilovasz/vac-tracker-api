@@ -1,13 +1,19 @@
 package com.lovilovasz.vac.tracker.domain;
 
+import com.lovilovasz.vac.tracker.domain.medicalhistory.MedicalHistory;
 import com.lovilovasz.vac.tracker.entity.PetEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Pet {
     private UUID id;
     private String name;
@@ -16,10 +22,10 @@ public class Pet {
     private String gender;
     private double weight;
     private String color;
-    private List<Vaccination> vaccinations;
     private String owner;
     private String microchipNumber;
     private LocalDate dateOfBirth;
+    private MedicalHistory medicalHistory = new MedicalHistory();
 
     public PetEntity toEntity() {
         PetEntity petEntity = new PetEntity();
