@@ -1,7 +1,9 @@
 package com.lovilovasz.vac.tracker.entity;
 
 import com.lovilovasz.vac.tracker.domain.Pet;
-import com.lovilovasz.vac.tracker.domain.Vaccination;
+import com.lovilovasz.vac.tracker.domain.medicalhistory.VaccinationRecords;
+import com.lovilovasz.vac.tracker.entity.medicalhistory.MedicalHistoryEntity;
+import com.lovilovasz.vac.tracker.entity.medicalhistory.VaccinationRecordEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,11 +34,7 @@ public class PetEntity {
     private String microchipNumber;
     private LocalDate dateOfBirth;
 
-    public Pet toDomain(List<VaccinationEntity> vaccinationEntityList) {
-        List<Vaccination> vaccinationList = vaccinationEntityList
-                .stream()
-                .map(VaccinationEntity::toDomain)
-                .toList();
+    public Pet toDomain(MedicalHistoryEntity medicalHistoryEntity) {
         Pet pet = new Pet();
         pet.setId(this.id);
         pet.setName(this.name);
@@ -45,7 +43,7 @@ public class PetEntity {
         pet.setGender(this.gender);
         pet.setWeight(this.weight);
         pet.setColor(this.color);
-        pet.setVaccinations(vaccinationList);
+        pet.setMedicalHistory(medicalHistoryEntity.toDomain());
         pet.setOwner(this.owner);
         pet.setMicrochipNumber(this.microchipNumber);
         pet.setDateOfBirth(this.dateOfBirth);

@@ -23,28 +23,148 @@
     </changeSet>
 
     <changeSet id="2" author="kristof.lovasz">
-        <createTable tableName="vaccination">
+        <createTable tableName="medical_condition">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="vaccination_date" type="DATE">
+            <column name="condition_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
+            </column>
+            <column name="diagnosis_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="treatment" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="pet_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="medical_condition"
+                                 baseColumnNames="pet_id"
+                                 referencedTableName="pet"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_medical_condition_pet"/>
+    </changeSet>
+
+    <!-- ChangeSet for creating the 'vaccination_record' table -->
+    <changeSet id="3" author="kristof.lovasz">
+        <createTable tableName="vaccination_record">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="vaccine_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="vaccination_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
             <column name="expiration_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="administered_by" type="VARCHAR(255)"/>
+            <column name="pet_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="vaccination_record"
+                                 baseColumnNames="pet_id"
+                                 referencedTableName="pet"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_vaccination_record_pet"/>
+    </changeSet>
+
+    <!-- ChangeSet for creating the 'medication_record' table -->
+    <changeSet id="4" author="kristof.lovasz">
+        <createTable tableName="medication_record">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="medication_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dosage" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATE"/>
+            <column name="end_date" type="DATE"/>
+            <column name="instructions" type="VARCHAR(255)"/>
+            <column name="pet_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="medication_record"
+                                 baseColumnNames="pet_id"
+                                 referencedTableName="pet"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_medication_record_pet"/>
+    </changeSet>
+
+    <!-- ChangeSet for creating the 'allergy' table -->
+    <changeSet id="5" author="kristof.lovasz">
+        <createTable tableName="allergy">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="allergen" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reaction" type="VARCHAR(255)"/>
+            <column name="date_identified" type="DATE">
                 <constraints nullable="false"/>
             </column>
             <column name="pet_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="vaccination"
+        <addForeignKeyConstraint baseTableName="allergy"
                                  baseColumnNames="pet_id"
                                  referencedTableName="pet"
                                  referencedColumnNames="id"
-                                 constraintName="fk_vaccination_pet"/>
+                                 constraintName="fk_allergy_pet"/>
+    </changeSet>
+
+    <!-- ChangeSet for creating the 'surgery' table -->
+    <changeSet id="6" author="kristof.lovasz">
+        <createTable tableName="surgery">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="surgery_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surgery_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="outcome" type="VARCHAR(255)"/>
+            <column name="pet_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="surgery"
+                                 baseColumnNames="pet_id"
+                                 referencedTableName="pet"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_surgery_pet"/>
+    </changeSet>
+
+    <!-- ChangeSet for creating the 'check_up' table -->
+    <changeSet id="7" author="kristof.lovasz">
+        <createTable tableName="check_up">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="visit_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="veterinarian" type="VARCHAR(255)"/>
+            <column name="notes" type="VARCHAR(255)"/>
+            <column name="pet_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="check_up"
+                                 baseColumnNames="pet_id"
+                                 referencedTableName="pet"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_check_up_pet"/>
     </changeSet>
 
 </databaseChangeLog>
