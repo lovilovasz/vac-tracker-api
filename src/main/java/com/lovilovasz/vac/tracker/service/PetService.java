@@ -1,8 +1,7 @@
 package com.lovilovasz.vac.tracker.service;
 
 import com.lovilovasz.vac.tracker.domain.Pet;
-import com.lovilovasz.vac.tracker.domain.medicalhistory.MedicalHistory;
-import com.lovilovasz.vac.tracker.domain.medicalhistory.VaccinationRecords;
+import com.lovilovasz.vac.tracker.domain.medicalhistory.*;
 import com.lovilovasz.vac.tracker.entity.PetEntity;
 import com.lovilovasz.vac.tracker.entity.medicalhistory.*;
 import com.lovilovasz.vac.tracker.repository.PetRepository;
@@ -10,6 +9,7 @@ import com.lovilovasz.vac.tracker.repository.medicalhistory.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -73,10 +73,35 @@ public class PetService {
                 .toList();
     }
 
-    public void addVaccinationToPet(UUID petId, VaccinationRecords vaccinationRecords) {
+    public void addMedicalConditionToPet(UUID petId, MedicalCondition medicalCondition) {
+        addMedicalHistoryToPet(petId, medicalCondition, medicalConditionRepository);
+    }
+
+    public void addVaccinationToPet(UUID petId, VaccinationRecord vaccinationRecord) {
+        addMedicalHistoryToPet(petId, vaccinationRecord, vaccinationRepository);
+    }
+
+    public void addMedicationToPet(UUID petId, MedicationRecord medicationRecord) {
+        addMedicalHistoryToPet(petId, medicationRecord, medicationRecordRepository);
+    }
+
+    public void addAllergyToPet(UUID petId, Allergy allergy) {
+        addMedicalHistoryToPet(petId, allergy, allergyRepository);
+    }
+
+    public void addSurgeryToPet(UUID petId, Surgery surgery) {
+        addMedicalHistoryToPet(petId, surgery, surgeryRepository);
+    }
+
+    public void addCheckUpToPet(UUID petId, CheckUp checkUp) {
+        addMedicalHistoryToPet(petId, checkUp, checkUpRepository);
+    }
+
+
+    private void addMedicalHistoryToPet(UUID petId, MedicalHistoryRecord medicalHistoryRecord, JpaRepository jpaRepository) {
         Optional<PetEntity> optionalPet = petRepository.findById(petId);
         if (optionalPet.isPresent()) {
-            vaccinationRepository.save(vaccinationRecords.toEntity(petId));
+            jpaRepository.save(medicalHistoryRecord.toEntity(petId));
         } else {
             throw new EntityNotFoundException("Pet not found");
         }

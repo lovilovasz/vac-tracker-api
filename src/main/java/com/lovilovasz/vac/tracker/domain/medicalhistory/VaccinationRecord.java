@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VaccinationRecords {
+public class VaccinationRecord implements MedicalHistoryRecord<VaccinationRecordEntity> {
     private UUID id;
     private LocalDate vaccinationDate;
     private String vaccineName;

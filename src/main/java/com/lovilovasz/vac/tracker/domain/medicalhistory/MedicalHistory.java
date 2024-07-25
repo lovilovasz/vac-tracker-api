@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class MedicalHistory {
     private List<MedicalCondition> medicalConditions;
-    private List<VaccinationRecords> vaccinationRecords;
+    private List<VaccinationRecord> vaccinationRecords;
     private List<MedicationRecord> medicationRecords;
     private List<Allergy> allergies;
     private List<Surgery> surgeries;

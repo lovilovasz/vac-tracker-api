@@ -1,6 +1,6 @@
 package com.lovilovasz.vac.tracker.entity.medicalhistory;
 
-import com.lovilovasz.vac.tracker.domain.medicalhistory.VaccinationRecords;
+import com.lovilovasz.vac.tracker.domain.medicalhistory.VaccinationRecord;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -24,13 +24,13 @@ public class VaccinationRecordEntity {
     private String administeredBy;
     private UUID petId;
 
-    public VaccinationRecords toDomain() {
-        VaccinationRecords vaccinationRecords = new VaccinationRecords();
-        vaccinationRecords.setId(this.id);
-        vaccinationRecords.setVaccinationDate(this.vaccinationDate);
-        vaccinationRecords.setVaccineName(this.vaccineName);
-        vaccinationRecords.setExpirationDate(this.expirationDate);
-        vaccinationRecords.setAdministeredBy(this.administeredBy);
-        return vaccinationRecords;
+    public VaccinationRecord toDomain() {
+        VaccinationRecord vaccinationRecord = new VaccinationRecord();
+        vaccinationRecord.setId(this.id);
+        vaccinationRecord.setVaccinationDate(this.vaccinationDate);
+        vaccinationRecord.setVaccineName(this.vaccineName);
+        vaccinationRecord.setExpirationDate(this.expirationDate);
+        vaccinationRecord.setAdministeredBy(this.administeredBy);
+        return vaccinationRecord;
     }
 }
