@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  vac-tracker-db:
+    image: postgres:latest
+    container_name: vac-tracker-db
+    environment:
+      POSTGRES_USER: csimbora
+      POSTGRES_PASSWORD: csimbora
+      POSTGRES_DB: vac_tracker_db
+    ports:
+      - "5432:5432"
