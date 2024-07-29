@@ -1,8 +1,7 @@
 package com.lovilovasz.vac.tracker.controller;
 
 import com.lovilovasz.vac.tracker.domain.Pet;
-import com.lovilovasz.vac.tracker.domain.medicalhistory.MedicalHistory;
-import com.lovilovasz.vac.tracker.domain.medicalhistory.VaccinationRecords;
+import com.lovilovasz.vac.tracker.domain.medicalhistory.*;
 import com.lovilovasz.vac.tracker.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public class PetController {
     private PetService petService;
 
     @PostMapping
-    public Pet createPet(@RequestBody Pet pet) {
+    public Pet upsertPet(@RequestBody Pet pet) {
         pet.setMedicalHistory(MedicalHistory.builder().build());
         return petService.savePet(pet);
     }
@@ -31,10 +30,5 @@ public class PetController {
     @GetMapping("/owner/{ownerName}")
     public List<Pet> getPetsByOwner(@PathVariable String ownerName) {
         return petService.getPetsByOwner(ownerName);
-    }
-
-    @PostMapping("/{petId}/vaccinations")
-    public void addVaccinationToPet(@PathVariable UUID petId, @RequestBody VaccinationRecords vaccinationRecords) {
-        petService.addVaccinationToPet(petId, vaccinationRecords);
     }
 }

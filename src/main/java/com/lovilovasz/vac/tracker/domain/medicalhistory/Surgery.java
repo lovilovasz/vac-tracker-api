@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class Surgery {
+public class Surgery implements MedicalHistoryRecord<SurgeryEntity> {
     private UUID id;
     private String surgeryType;
     private LocalDate surgeryDate;

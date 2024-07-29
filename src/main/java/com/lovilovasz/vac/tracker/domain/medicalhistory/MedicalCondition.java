@@ -9,13 +9,12 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class MedicalCondition {
+public class MedicalCondition implements MedicalHistoryRecord<MedicalConditionEntity> {
     private UUID id;
     private String conditionName;
     private LocalDate diagnosisDate;
     private String treatment;
     private String status;
-    private UUID petId;
 
     public MedicalConditionEntity toEntity(UUID petId) {
         return MedicalConditionEntity.builder()

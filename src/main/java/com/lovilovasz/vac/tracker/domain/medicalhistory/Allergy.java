@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class Allergy {
+public class Allergy implements MedicalHistoryRecord<AllergyEntity> {
     private UUID id;
     private String allergen;
     private String reaction;
