@@ -8,6 +8,7 @@ import com.lovilovasz.vac.tracker.repository.PetRepository;
 import com.lovilovasz.vac.tracker.repository.medicalhistory.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class PetService {
 
     @Autowired
@@ -40,6 +42,7 @@ public class PetService {
         PetEntity petEntity = petRepository.save(pet.toEntity());
         MedicalHistory medicalHistory = pet.getMedicalHistory() != null ? pet.getMedicalHistory() : MedicalHistory.builder().build();
         MedicalHistoryEntity medicalHistoryEntity = saveMedicalHistoryEntity(medicalHistory, petEntity);
+        log.info("Pet saved!");
         return petEntity.toDomain(medicalHistoryEntity);
     }
 
@@ -52,6 +55,7 @@ public class PetService {
         surgeryRepository.deleteByPetId(petId);
         checkUpRepository.deleteByPetId(petId);
         petRepository.deleteById(petId);
+        log.info("Pet --" + petId + "-- deleted!");
     }
 
     public List<Pet> getPetsByOwner(String ownerName) {
@@ -105,6 +109,7 @@ public class PetService {
         } else {
             throw new EntityNotFoundException("Pet not found");
         }
+        log.info(medicalHistoryRecord.getClass().getSimpleName() + " has been saved!");
     }
 
     private MedicalHistoryEntity saveMedicalHistoryEntity(MedicalHistory medicalHistory, PetEntity petEntity) {
