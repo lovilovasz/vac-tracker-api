@@ -5,8 +5,21 @@ services:
     image: postgres:latest
     container_name: vac-tracker-db
     environment:
-      POSTGRES_USER: csimbora
-      POSTGRES_PASSWORD: csimbora
+      POSTGRES_USER: -----
+      POSTGRES_PASSWORD: -----
       POSTGRES_DB: vac_tracker_db
     ports:
       - "5432:5432"
+  vac-tracker-api:
+    image: vac-tracker-api
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    depends_on:
+      - vac-tracker-db
+    environment:
+      - SPRING_DATASOURCE_URL=*****
+      - SPRING_DATASOURCE_USERNAME=*****
+      - SPRING_DATASOURCE_PASSWORD=*****
+    ports:
+      - "8080:8080"
