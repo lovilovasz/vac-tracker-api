@@ -25,7 +25,7 @@ public class PetService {
     @Autowired
     private MedicalConditionRepository medicalConditionRepository;
     @Autowired
-    private VaccinationRepository vaccinationRepository;
+    private VaccinationRecordRepository vaccinationRecordRepository;
     @Autowired
     private MedicationRecordRepository medicationRecordRepository;
     @Autowired
@@ -46,7 +46,7 @@ public class PetService {
     @Transactional
     public void deletePet(UUID petId) {
         medicalConditionRepository.deleteByPetId(petId);
-        vaccinationRepository.deleteByPetId(petId);
+        vaccinationRecordRepository.deleteByPetId(petId);
         medicationRecordRepository.deleteByPetId(petId);
         allergyRepository.deleteByPetId(petId);
         surgeryRepository.deleteByPetId(petId);
@@ -62,7 +62,7 @@ public class PetService {
                     UUID petId = petEntity.getId();
                     return petEntity.toDomain(MedicalHistoryEntity.builder()
                             .medicalConditions(medicalConditionRepository.findByPetId(petId))
-                            .vaccinationRecords(vaccinationRepository.findByPetId(petId))
+                            .vaccinationRecords(vaccinationRecordRepository.findByPetId(petId))
                             .medicationRecords(medicationRecordRepository.findByPetId(petId))
                             .allergies(allergyRepository.findByPetId(petId))
                             .surgeries(surgeryRepository.findByPetId(petId))
@@ -78,7 +78,7 @@ public class PetService {
     }
 
     public void addVaccinationToPet(UUID petId, VaccinationRecord vaccinationRecord) {
-        addMedicalHistoryToPet(petId, vaccinationRecord, vaccinationRepository);
+        addMedicalHistoryToPet(petId, vaccinationRecord, vaccinationRecordRepository);
     }
 
     public void addMedicationToPet(UUID petId, MedicationRecord medicationRecord) {
@@ -144,7 +144,7 @@ public class PetService {
                 .toList()
                 : Collections.emptyList();
         List<MedicalConditionEntity> savedMedicalCondition = medicalConditionRepository.saveAll(medicalConditionEntities);
-        List<VaccinationRecordEntity> savedVaccinationRecordEntityList = vaccinationRepository.saveAll(vaccinationRecordEntityList);
+        List<VaccinationRecordEntity> savedVaccinationRecordEntityList = vaccinationRecordRepository.saveAll(vaccinationRecordEntityList);
         List<MedicationRecordEntity> savedMedicationRecordEntities = medicationRecordRepository.saveAll(medicationRecordEntities);
         List<AllergyEntity> savedAllergyEntities = allergyRepository.saveAll(allergyEntities);
         List<SurgeryEntity> savedSurgeryEntities = surgeryRepository.saveAll(surgeryEntities);
