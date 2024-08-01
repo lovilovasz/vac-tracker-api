@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/pets")
 public class PetController {
@@ -30,5 +31,10 @@ public class PetController {
     @GetMapping("/owner/{ownerName}")
     public List<Pet> getPetsByOwner(@PathVariable String ownerName) {
         return petService.getPetsByOwner(ownerName);
+    }
+
+    @GetMapping("/{petId}")
+    public Pet getPetById(@PathVariable UUID petId) {
+        return petService.getPetById(petId);
     }
 }
