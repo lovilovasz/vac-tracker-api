@@ -64,17 +64,28 @@ public class PetService {
                 .stream()
                 .map(petEntity -> {
                     UUID petId = petEntity.getId();
-                    return petEntity.toDomain(MedicalHistoryEntity.builder()
-                            .medicalConditions(medicalConditionRepository.findByPetId(petId))
-                            .vaccinationRecords(vaccinationRecordRepository.findByPetId(petId))
-                            .medicationRecords(medicationRecordRepository.findByPetId(petId))
-                            .allergies(allergyRepository.findByPetId(petId))
-                            .surgeries(surgeryRepository.findByPetId(petId))
-                            .checkUps(checkUpRepository.findByPetId(petId))
-                            .build()
-                    );
+                    return petEntity.toDomain(getMedicalHistory(petId));
                 })
                 .toList();
+    }
+
+    private MedicalHistoryEntity getMedicalHistory(UUID petId) {
+        return MedicalHistoryEntity.builder()
+                .medicalConditions(medicalConditionRepository.findByPetId(petId))
+                .vaccinationRecords(vaccinationRecordRepository.findByPetId(petId))
+                .medicationRecords(medicationRecordRepository.findByPetId(petId))
+                .allergies(allergyRepository.findByPetId(petId))
+                .surgeries(surgeryRepository.findByPetId(petId))
+                .checkUps(checkUpRepository.findByPetId(petId))
+                .build();
+    }
+
+    public Pet getPetById(UUID petId) {
+        Optional<PetEntity> petEntity = petRepository.findById(petId);
+        if(petEntity.isEmpty()) {
+            throw new EntityNotFoundException("There is not pet with id: " + petId);
+        }
+        return petEntity.get().toDomain(getMedicalHistory(petId));
     }
 
     public void addMedicalConditionToPet(UUID petId, MedicalCondition medicalCondition) {
