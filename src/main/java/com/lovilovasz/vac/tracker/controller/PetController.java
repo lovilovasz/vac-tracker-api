@@ -1,7 +1,7 @@
 package com.lovilovasz.vac.tracker.controller;
 
 import com.lovilovasz.vac.tracker.domain.Pet;
-import com.lovilovasz.vac.tracker.domain.medicalhistory.*;
+import com.lovilovasz.vac.tracker.domain.medicalhistory.MedicalHistory;
 import com.lovilovasz.vac.tracker.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/pets")
 public class PetController {
