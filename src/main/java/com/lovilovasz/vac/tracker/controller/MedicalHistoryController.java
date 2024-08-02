@@ -22,7 +22,7 @@ public class MedicalHistoryController {
         petService.addMedicalConditionToPet(petId, medicalCondition);
     }
 
-    @PostMapping("/{petId}/vaccinations")
+    @PostMapping("/{petId}/vaccinationRecords")
     public void addVaccinationToPet(@PathVariable UUID petId, @RequestBody VaccinationRecord vaccinationRecord) {
         petService.addVaccinationToPet(petId, vaccinationRecord);
     }
@@ -52,7 +52,7 @@ public class MedicalHistoryController {
         medicalHistoryService.deleteMedicalCondition(id);
     }
 
-    @DeleteMapping("/vaccinations/{id}")
+    @DeleteMapping("/vaccinationRecords/{id}")
     public void deleteVaccinationToPet(@PathVariable UUID id) {
         medicalHistoryService.deleteVaccinationRecord(id);
     }
