@@ -1,6 +1,7 @@
 package com.lovilovasz.vac.tracker.service;
 
 import com.lovilovasz.vac.tracker.domain.horse.HorseResponse;
+import com.lovilovasz.vac.tracker.domain.horse.HorseSearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -18,28 +19,18 @@ public class HorseSearchService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${dijugratas.api.url}")
-    private String apiUrl;
+    @Value("${mlosz.api.host}")
+    private String apiHost;
 
-    @Value("${dijugratas.api.progkey}")
-    private String progKey;
-
-    public HorseResponse searchHorse(String horseName) {
-        URI url = UriComponentsBuilder.fromHttpUrl(apiUrl)
-                .queryParam("sidx", "Name")
-                .queryParam("page", "1")
-                .queryParam("sord", "")
-                .queryParam("rows", "10")
-                .queryParam("searchTerm", horseName)
-                .queryParam("fields", "Id,Name,BirthDate,Color,Sex,Chip,Owner,BreedName")
+    public HorseResponse searchHorse(HorseSearchParams horseSearchParams) {
+        URI url = UriComponentsBuilder.fromHttpUrl(apiHost + "/api/search/detailed-search")
                 .build().toUri();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("accept", "application/json, text/javascript, */*; q=0.01");
-        headers.set("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-        headers.set("progkey", progKey);
+        headers.set("accept", "application/json");
+        headers.set("content-type", "application/json");
 
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+        HttpEntity<HorseSearchParams> entity = new HttpEntity<>(horseSearchParams, headers);
 
         ResponseEntity<HorseResponse> response = restTemplate.exchange(
                 url,
